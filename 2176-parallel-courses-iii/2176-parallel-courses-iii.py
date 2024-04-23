@@ -11,16 +11,16 @@ class Solution:
         for i in range(n):
             if not indegree[i+1]:
                 queue.append((i+1, time[i]))
-        until_curr = [0 for _ in  range(n)]        
+        max_time = [0 for _ in  range(n)]        
         while queue:
             curr, curr_time = queue.popleft()
             _min_time = max(_min_time, curr_time)
 
             for ngb in graph[curr]:
                 indegree[ngb] -= 1
-                until_curr[ngb-1] = max(until_curr[ngb-1], curr_time)
+                max_time[ngb-1] = max(max_time[ngb-1], curr_time)
                 if indegree[ngb] == 0:
-                    queue.append((ngb, until_curr[ngb-1]+time[ngb-1])) 
+                    queue.append((ngb, max_time[ngb-1]+time[ngb-1])) 
 
         return _min_time                          
 
