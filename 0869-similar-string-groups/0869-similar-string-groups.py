@@ -5,9 +5,10 @@ class Solution:
         root = [i for i in range(n)]
         size = [1 for i in range(n)]
         def find(x):
-            if x == root[x]:
-                return x
-            root[x] = find(root[x])
+            while x != root[x]:
+                root[x] = root[root[x]]
+                x = root[x]
+
             return root[x]
         def union(x, y):
             px = find(x)
