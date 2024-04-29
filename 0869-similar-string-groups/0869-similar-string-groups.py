@@ -8,8 +8,8 @@ class Solution:
             while x != root[x]:
                 root[x] = root[root[x]]
                 x = root[x]
-
             return root[x]
+            
         def union(x, y):
             px = find(x)
             py = find(y)
