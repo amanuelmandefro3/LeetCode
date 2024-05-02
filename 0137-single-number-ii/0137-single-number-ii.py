@@ -1,14 +1,20 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
 
-        one = 0
-        two = 0
-        for num in nums:
-            one = (one^num) & ~two
-            two = (two^num) & ~one
-          
+        ans = 0
+        b = 1
+        for i in range(32):
+            bit_sum = 0
+            for num in nums:
+                bit_sum += num & b
+            if bit_sum % 3:
+                ans |= b
+            b <<= 1
+            
+        if ans >= 2**31:
+            ans -= 2**32   
 
-        return one    
+        return ans    
 
 
 
