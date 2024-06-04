@@ -2,43 +2,39 @@ class TrieNode:
     def __init__(self):
         self.children = [None for _ in range(26)]
         self.is_end = False
+
 class Trie:
     def __init__(self):
         self.root = TrieNode()
+
     def insert(self, word):
         curr = self.root
         for c in word:
-            if not curr.children[ord(c)-ord('a')]:
-                curr.children[ord(c)-ord('a')] = TrieNode()
-            curr = curr.children[ord(c)-ord('a')]
+            index = ord(c) - ord('a')
+            if not curr.children[index]:
+                curr.children[index] = TrieNode()
+            curr = curr.children[index]
         curr.is_end = True
 
-    def search_max(self, word, res):
+    def created_from_other(self, word):
         curr = self.root
-        if len(res) > len(word):return res
-        for c in word:
-            curr = curr.children[ord(c)-ord('a')]
-            if not curr.is_end: break
+        for i in range(len(word)):
+            index = ord(word[i]) - ord('a')
+            if not curr.children[index] or not curr.children[index].is_end:
+                return False
+            curr = curr.children[index]
+        return True
 
-            if curr.is_end:
-                if len(res) < len(word) or word < res:
-                    res = word
-        return res            
-
-  
-
-                      
 class Solution:
     def longestWord(self, words: List[str]) -> str:
         trie = Trie()
         for word in words:
             trie.insert(word)
         
-        res = ''
+        res = ""
         for word in words:
-            res = trie.search_max(res, word)
+            if trie.created_from_other(word):
+                if len(word) > len(res) or (len(word) == len(res) and word < res):
+                    res = word
 
-        return res            
-                
-                 
-        
+        return res
