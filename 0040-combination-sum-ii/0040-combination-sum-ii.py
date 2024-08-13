@@ -3,6 +3,7 @@ class Solution:
         candidates.sort()
         arr = []
         path = []
+        
         num = candidates[0]
         num_count = candidates.count(num)
         path_count = defaultdict(int)
